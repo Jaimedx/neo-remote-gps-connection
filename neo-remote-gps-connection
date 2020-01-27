@@ -1,0 +1,23 @@
+#!/usr/bin/python
+#we import necessary libraries
+import serial
+import psycopg2
+import binascii
+#opening serial port
+arduino = serial.Serial('COM4', 115200)
+Puerto = arduino.read(size=20) 
+conver =Puerto.decode('utf-8')
+while True:
+    try:
+
+        print(conver)
+    
+        db = psycopg2.connect(database='',user='',password='', host='')       
+        curs=db.cursor()
+        curs.execute("INSERT INTO database name ( table1, table2) VALUES(%s,%s) ",(conver, 'ENTERO'))
+        db.commit()
+                        
+        db.close() 
+
+    except KeyboardInterrupt:
+        quit()
